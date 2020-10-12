@@ -138,7 +138,7 @@ resource aws_route_table_association "nomad-demo" {
 
 
 resource aws_instance "test-server" {
-  ami                         = "ami-08c4955bcc43b124e"
+  ami                         = "ami-0e37a3fa0e0e2d859"
   #ami                         = "ami-02b5ec5be3862a7ad"
   instance_type               = var.instance_type
   key_name                    = var.aws_key
