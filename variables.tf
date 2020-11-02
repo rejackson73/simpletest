@@ -35,8 +35,3 @@ variable "ttl_tag" {
   description = "infrastructure owner"
   default     = 72
 }
-
-variable "ssh_key" {
-  type        = string
-  description = "private key"
-}
