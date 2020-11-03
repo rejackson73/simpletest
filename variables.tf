@@ -5,13 +5,13 @@ variable "region" {
 variable "vpc_cidr" {
   type        = string
   description = "CIDR of the VPC"
-  default     = "192.168.100.0/24"
+  default     = "172.16.16.0/24"
 }
 
 variable "prefix" {
   type        = string
   description = "prefix to identify resources"
-  default     = "my_demo"
+  default     = "my_demos"
 }
 
 variable "instance_type" {
