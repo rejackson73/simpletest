@@ -11,7 +11,7 @@ variable "vpc_cidr" {
 variable "prefix" {
   type        = string
   description = "prefix to identify resources"
-  default     = "my_demos"
+  default     = "my_demo"
 }
 
 variable "instance_type" {
