@@ -3,18 +3,18 @@ provider "aws" {
   region  = var.region
 }
 
-#resource aws_vpc "nomad-demo" {
-#  cidr_block           = var.vpc_cidr
-#  enable_dns_hostnames = true
+resource aws_vpc "nomad-demo" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_hostnames = true
 
-#  tags = {
-#    name = "${var.prefix}-vpc"
-#  }
-#}
+  tags = {
+    name = "${var.prefix}-vpc"
+  }
+}
 
 resource aws_subnet "nomad-demo" {
-  #vpc_id     = aws_vpc.nomad-demo.id
-  vpc_id = "vpc-2790344c"
+  vpc_id     = aws_vpc.nomad-demo.id
+  # vpc_id = "vpc-2790344c"
   cidr_block = var.vpc_cidr
   tags = {
     name = "${var.prefix}-subnet"
@@ -24,9 +24,9 @@ resource aws_subnet "nomad-demo" {
 resource aws_security_group "nomad-demo" {
   name = "${var.prefix}-security-group"
 
-  #vpc_id = aws_vpc.nomad-demo.id
-  vpc_id = "vpc-2790344c"
-  
+  vpc_id = aws_vpc.nomad-demo.id
+  #vpc_id = "vpc-2790344c"
+
   ingress {
     from_port   = 22
     to_port     = 22
@@ -117,8 +117,8 @@ resource aws_security_group "nomad-demo" {
 }
 
 resource aws_internet_gateway "nomad-demo" {
-  #vpc_id = aws_vpc.nomad-demo.id
-  vpc_id = "vpc-2790344c"
+  vpc_id = aws_vpc.nomad-demo.id
+  #vpc_id = "vpc-2790344c"
 
   tags = {
     Name = "${var.prefix}-internet-gateway"
@@ -126,8 +126,8 @@ resource aws_internet_gateway "nomad-demo" {
 }
 
 resource aws_route_table "nomad-demo" {
-  #vpc_id = aws_vpc.nomad-demo.id
-  vpc_id = "vpc-2790344c"
+  vpc_id = aws_vpc.nomad-demo.id
+  #vpc_id = "vpc-2790344c"
 
   route {
     cidr_block = "0.0.0.0/0"
