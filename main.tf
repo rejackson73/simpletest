@@ -142,8 +142,8 @@ resource aws_route_table_association "nomad-demo" {
 
 
 resource aws_instance "test-server" {
-  ami                         = "ami-044120f0dd7ed0fb4"
-  #ami                         = "ami-02b5ec5be3862a7ad"
+  #ami                         = "ami-044120f0dd7ed0fb4"
+  ami                         = "ami-02b5ec5be3862a7ad"
   instance_type               = var.instance_type
   key_name                    = var.aws_key
   associate_public_ip_address = true
