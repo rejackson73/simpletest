@@ -19,9 +19,9 @@ provider "vault" {
 
 
 data "vault_aws_access_credentials" "creds" {
-  backend = aws2
-  role    = rjackson-vault
-  type    = sts
+  backend = "aws2"
+  role    = "rjackson-vault"
+  type    = "sts"
   ttl     = "15m"
 }
 
