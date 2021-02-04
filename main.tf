@@ -14,7 +14,7 @@ provider "vault" {
   # This will default to using $VAULT_ADDR
   # But can be set explicitly
   # address = "https://vault.example.net:8200"
-  address = "http://127.0.0.1:8200"
+  address = "http://192.168.1.218:8200"
 }
 
 
