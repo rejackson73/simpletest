@@ -20,7 +20,7 @@ provider "vault" {
 
 data "vault_aws_access_credentials" "creds" {
   backend = "aws"
-  role    = "ec2-full"
+  role    = "rjackson-vault"
   ttl     = "15m"
 }
 
