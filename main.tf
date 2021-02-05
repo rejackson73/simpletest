@@ -1,12 +1,12 @@
 provider "aws" {
   version = "~> 2.5"
   region  = var.region
-  // access_key = data.vault_aws_access_credentials.creds.access_key
-  // secret_key = data.vault_aws_access_credentials.creds.secret_key
+  access_key = data.vault_aws_access_credentials.creds.access_key
+  secret_key = data.vault_aws_access_credentials.creds.secret_key
   #security_token = data.vault_aws_access_credentials.creds.secret_key
 }
 
-// provider "vault" {
+provider "vault" {
 //   # It is strongly recommended to configure this provider through the
 //   # environment variables described above, so that each user can have
 //   # separate credentials set in the environment.
@@ -14,19 +14,18 @@ provider "aws" {
 //   # This will default to using $VAULT_ADDR
 //   # But can be set explicitly
 //   # address = "https://vault.example.net:8200"
-//   address = "http://192.168.1.218:8200"
-// }
+   address = "http://192.168.1.218:8200"
+}
 
 
-// data "vault_aws_access_credentials" "creds" {
-//   backend = "aws2"
-//   role    = "rjackson-vault"
-//   type    = "sts"
-//   ttl     = "15m"
-// }
+data "vault_aws_access_credentials" "creds" {
+  backend = "aws"
+  role    = "ec2-full"
+  ttl     = "15m"
+}
 
 
-resource aws_vpc "nomad-demo" {
+resource aws_vpc "simple-demo" {
   cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
 
@@ -35,8 +34,8 @@ resource aws_vpc "nomad-demo" {
   }
 }
 
-resource aws_subnet "nomad-demo" {
-  vpc_id     = aws_vpc.nomad-demo.id
+resource aws_subnet "simple-demo" {
+  vpc_id     = aws_vpc.simple-demo.id
   #vpc_id = "vpc-0ac388e345e4f2429"
   cidr_block = var.vpc_cidr
   tags = {
@@ -44,10 +43,10 @@ resource aws_subnet "nomad-demo" {
   }
 }
 
-resource aws_security_group "nomad-demo" {
+resource aws_security_group "simple-demo" {
   name = "${var.prefix}-security-group"
 
-  vpc_id = aws_vpc.nomad-demo.id
+  vpc_id = aws_vpc.simple-demo.id
   #vpc_id = "vpc-0ac388e345e4f2429"
 
   ingress {
@@ -139,8 +138,8 @@ resource aws_security_group "nomad-demo" {
   }
 }
 
-resource aws_internet_gateway "nomad-demo" {
-  vpc_id = aws_vpc.nomad-demo.id
+resource aws_internet_gateway "simple-demo" {
+  vpc_id = aws_vpc.simple-demo.id
   #vpc_id = "vpc-0ac388e345e4f2429"
 
   tags = {
@@ -148,19 +147,19 @@ resource aws_internet_gateway "nomad-demo" {
   }
 }
 
-resource aws_route_table "nomad-demo" {
-  vpc_id = aws_vpc.nomad-demo.id
+resource aws_route_table "simple-demo" {
+  vpc_id = aws_vpc.simple-demo.id
   #vpc_id = "vpc-0ac388e345e4f2429"
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.nomad-demo.id
+    gateway_id = aws_internet_gateway.simple-demo.id
   }
 }
 
-resource aws_route_table_association "nomad-demo" {
-  subnet_id      = aws_subnet.nomad-demo.id
-  route_table_id = aws_route_table.nomad-demo.id
+resource aws_route_table_association "simple-demo" {
+  subnet_id      = aws_subnet.simple-demo.id
+  route_table_id = aws_route_table.simple-demo.id
 }
 
 
@@ -170,10 +169,10 @@ resource aws_instance "test-server" {
   instance_type               = var.instance_type
   key_name                    = var.aws_key
   associate_public_ip_address = true
-  subnet_id                   = aws_subnet.nomad-demo.id
-  vpc_security_group_ids      = [aws_security_group.nomad-demo.id]
+  subnet_id                   = aws_subnet.simple-demo.id
+  vpc_security_group_ids      = [aws_security_group.simple-demo.id]
   tags = {
-    Name = "${var.prefix}-nomad-server-instance"
+    Name = "${var.prefix}-simple-server-instance"
     Owner = var.owner_tag
   }
 }
