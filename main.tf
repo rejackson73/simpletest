@@ -1,19 +1,28 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 2.5"
+    }
+  }
+}
 provider "aws" {
-  version = "~> 2.5"
-  region  = var.region
+  region  = var.aws_region
   access_key = data.vault_aws_access_credentials.creds.access_key
   secret_key = data.vault_aws_access_credentials.creds.secret_key
 }
 
+data "aws_ami" "an_image" {
+  most_recent      = true
+  owners           = ["self"]
+  filter {
+    name   = "name"
+    values = ["${var.owner_tag}-consul-*"]
+  }
+}
+
 provider "vault" {
-//   # It is strongly recommended to configure this provider through the
-//   # environment variables described above, so that each user can have
-//   # separate credentials set in the environment.
-//   #
-//   # This will default to using $VAULT_ADDR
-//   # But can be set explicitly
-//   # address = "https://vault.example.net:8200"
-   address = "http://192.168.1.218:8200"
+   address = "http://18.219.37.179:8200"
 }
 
 
@@ -35,7 +44,6 @@ resource aws_vpc "simple-demo" {
 
 resource aws_subnet "simple-demo" {
   vpc_id     = aws_vpc.simple-demo.id
-  #vpc_id = "vpc-0ac388e345e4f2429"
   cidr_block = var.vpc_cidr
   tags = {
     name = "${var.prefix}-subnet"
@@ -159,9 +167,9 @@ resource aws_route_table_association "simple-demo" {
   route_table_id = aws_route_table.simple-demo.id
 }
 
-
 resource aws_instance "test-server" {
-  ami                         = "ami-0c535febe421f118f"
+  count                       = 1
+  ami                         = data.aws_ami.an_image.id
   instance_type               = var.instance_type
   key_name                    = var.aws_key
   associate_public_ip_address = true
