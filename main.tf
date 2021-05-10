@@ -109,5 +109,6 @@ resource aws_instance "test-server" {
   tags = {
     Name = "${var.prefix}-simple-server-instance"
     Owner = var.owner_tag
+    Purpose = "demonstration"
   }
 }
