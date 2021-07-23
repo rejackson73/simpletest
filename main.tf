@@ -14,7 +14,8 @@ provider "aws" {
 
 data "aws_ami" "an_image" {
   most_recent      = true
-  owners           = ["self"]
+ // owners           = ["self"]
+  owners           = ["125523088429"]
   filter {
     name   = "name"
    // values = ["${var.owner_tag}-consul-*"]
