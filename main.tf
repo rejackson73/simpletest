@@ -17,7 +17,8 @@ data "aws_ami" "an_image" {
   owners           = ["self"]
   filter {
     name   = "name"
-    values = ["${var.owner_tag}-consul-*"]
+   // values = ["${var.owner_tag}-consul-*"]
+    values = ["CentOS 8.4.2105 x86_64"]
   }
 }
 
