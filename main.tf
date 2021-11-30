@@ -8,8 +8,8 @@ terraform {
 }
 provider "aws" {
   region  = var.aws_region
-  // access_key = data.vault_aws_access_credentials.creds.access_key
-  // secret_key = data.vault_aws_access_credentials.creds.secret_key
+  access_key = data.vault_aws_access_credentials.creds.access_key
+  secret_key = data.vault_aws_access_credentials.creds.secret_key
 }
 
 data "aws_ami" "an_image" {
@@ -24,7 +24,7 @@ data "aws_ami" "an_image" {
 }
 
 provider "vault" {
-   address = "http://18.219.37.179:8200"
+   address = "https://jacknas.local:8200"
 }
 
 
