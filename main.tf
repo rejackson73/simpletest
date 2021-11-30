@@ -29,7 +29,7 @@ provider "vault" {
 
 
 data "vault_aws_access_credentials" "creds" {
-  backend = "aws"
+  backend = "aws-personal"
   role    = "deity"
   ttl     = "15m"
 }
