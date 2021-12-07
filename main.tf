@@ -24,7 +24,7 @@ data "aws_ami" "an_image" {
 }
 
 provider "vault" {
-   address = "http://jacknas.local:8200"
+   address = "http://192.168.1.99:8200"
 }
 
 
