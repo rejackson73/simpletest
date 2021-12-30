@@ -6,11 +6,11 @@ terraform {
     }
   }
 }
-provider "aws" {
-  region  = var.aws_region
-  access_key = data.vault_aws_access_credentials.creds.access_key
-  secret_key = data.vault_aws_access_credentials.creds.secret_key
-}
+# provider "aws" {
+#   region  = var.aws_region
+#   access_key = data.vault_aws_access_credentials.creds.access_key
+#   secret_key = data.vault_aws_access_credentials.creds.secret_key
+# }
 
 data "aws_ami" "an_image" {
   most_recent      = true
@@ -23,16 +23,16 @@ data "aws_ami" "an_image" {
   }
 }
 
-provider "vault" {
-   address = "http://192.168.1.99:8200"
-}
+# provider "vault" {
+#    address = "http://192.168.1.99:8200"
+# }
 
 
-data "vault_aws_access_credentials" "creds" {
-  backend = "aws-personal"
-  role    = "deity"
-  ttl     = "15m"
-}
+# data "vault_aws_access_credentials" "creds" {
+#   backend = "aws-personal"
+#   role    = "deity"
+#   ttl     = "15m"
+# }
 
 
 resource aws_vpc "simple-demo" {
