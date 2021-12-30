@@ -3,6 +3,7 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 2.5"
+      region  = var.aws_region
     }
   }
 }
